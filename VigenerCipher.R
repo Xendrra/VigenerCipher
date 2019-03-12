@@ -1,30 +1,28 @@
-VigenerCipher<-function(text,klic){ 
-  text=utf8ToInt(text)
-  for (i in 1:length(text)){
-    if (text[i]==32){
-      text[i]=0
-      i=i-1
-      print(text)
-      print(i)
-    }
-  }
-  text=text-96
-  klic=utf8ToInt(klic)-97
+vige<-function(text,klic){ 
+  text=gsub(" ", "", text, fixed = TRUE)
+  klic=gsub(" ", "", klic, fixed = TRUE)
   print(text)
-  print(klic)
-  k=1
-  for (i in 1:length(text)){
-      text[i]=text[i]+klic[k]
-      if (k<length(klic)){
-        k=k+1
-      }else{ 
-        k=1}
-      if (text[i]>26){
-        text[i]=text[i]-26
-      }
+  a=letters
+  j=1
+  temp=numeric()
+  out=numeric()
+  sifra=character(0)
+  for (i in 1:nchar(text)){
+    print(i)
+    print(j)
+    temp[i]= which(a==substring(klic,j,j))-1
+    out[i]=which(a==substring(text,i,i))+temp[i]
+    print(c('out',out))
+    if (out[i]>26){
+      out[i]=out[i]-26
+    }
+    if (j==nchar(klic)){
+      j=1
+    }else
+    {j=j+1}
   }
-  print(text+96)
-  text=intToUtf8(text+96)
-    print(text)
+  for (i in 1:nchar(text)){ 
+    sifra[i]=a[out[i]]}
+  sifra=paste(sifra,collapse='')
+  print(sifra)
 }
-  
