@@ -1,28 +1,28 @@
-vige<-function(text,klic){ 
-  text=gsub(" ", "", text, fixed = TRUE)
-  klic=gsub(" ", "", klic, fixed = TRUE)
-  print(text)
-  a=letters
-  j=1
-  temp=numeric()
+VigenerCipher<-function(text,klic){ 
+  #funkce VigenerCipher vraci sifrovany text
+  #vstup1...text, retezec ktery ma byt sifrovan
+  #vstup2...klic, retezec pouzity k zasifrovani
+  #vystup...sifra, zakodovany vstupni text
+  text=gsub(" ", "", text, fixed = TRUE)        #odstraneni mezer
+  klic=gsub(" ", "", klic, fixed = TRUE)  
+  a=letters                                     #pomocny vektor s pismeny
+  j=1 
+  temp=numeric()                                #iniciace promennych
   out=numeric()
   sifra=character(0)
   for (i in 1:nchar(text)){
-    print(i)
-    print(j)
-    temp[i]= which(a==substring(klic,j,j))-1
-    out[i]=which(a==substring(text,i,i))+temp[i]
-    print(c('out',out))
-    if (out[i]>26){
-      out[i]=out[i]-26
-    }
-    if (j==nchar(klic)){
+    temp[i]= which(a==substring(klic,j,j))-1    #docasna promenna, prevadi pismena na cisla posunu (a=0)
+    out[i]=which(a==substring(text,i,i))+temp[i] #najde index kazdeho znaku v pomocnem vektoru a pricte zadany posun 
+    if (out[i]>26){                             #pokud index prekroci index pismene z, zacina znovu od a
+      out[i]=out[i]-26                         
+    } 
+    if (j==nchar(klic)){                        #pokud index j presahne delku klice, vraci se zpet k prvnimu znaku
       j=1
-    }else
+    }else                                       #jinak pokracuje na dalsi znak klice
     {j=j+1}
   }
-  for (i in 1:nchar(text)){ 
-    sifra[i]=a[out[i]]}
-  sifra=paste(sifra,collapse='')
-  print(sifra)
+  for (i in 1:nchar(text)){                     
+    sifra[i]=a[out[i]]}                         #prevod vypocitanych cisel zpet na pismena
+  sifra=paste(sifra,collapse='')                #spojeni jednotlivych znaku do jednoho retezce
+  return(sifra)                                
 }
